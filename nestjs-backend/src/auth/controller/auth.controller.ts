@@ -1,17 +1,5 @@
-import {
-  Controller,
-  Request,
-  Post,
-  UseGuards,
-  Body,
-  ClassSerializerInterceptor,
-  Req,
-  UseInterceptors,
-} from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
-import { User } from 'src/users/entity/users.model';
+import { Controller, Post, Body } from '@nestjs/common';
 import { LoginDto } from '../dtos/login.dto';
-import { JwtAuthGuard } from '../guards/auth.guard';
 import { AuthService } from '../service/auth.service';
 
 @Controller('auth')

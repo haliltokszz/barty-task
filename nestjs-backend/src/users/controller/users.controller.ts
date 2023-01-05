@@ -1,11 +1,8 @@
 import { ResponseUserDto } from './../dtos/response-user.dto';
 import { Body, Controller, Post, Get, Param, UseGuards } from '@nestjs/common';
 import { UsersService } from '../service/users.service';
-import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { plainToClass, plainToInstance } from 'class-transformer';
-import { AuthGuard } from '@nestjs/passport';
-import { LoginDto } from '../../auth/dtos/login.dto';
 import { JwtAuthGuard } from 'src/auth/guards/auth.guard';
 
 @Controller('users')

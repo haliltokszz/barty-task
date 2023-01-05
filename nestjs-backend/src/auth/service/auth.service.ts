@@ -4,7 +4,6 @@ import {
   Injectable,
   NotAcceptableException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/users/entity/users.model';
 import { UsersService } from 'src/users/service/users.service';
@@ -15,7 +14,6 @@ import { AuthHelper } from '../helper/auth.helper';
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
-    private readonly jwtService: JwtService,
     private readonly helper: AuthHelper,
   ) {}
   async validateUser(email: string, password: string): Promise<any> {
