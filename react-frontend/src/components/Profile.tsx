@@ -1,8 +1,28 @@
-import React from "react";
-import AuthService from "../services/auth.service";
+import React, { useEffect, useState } from "react";
+import { getCurrentUser } from "../services/auth.service";
+import IUser from "../types/user.type";
 
 const Profile: React.FC = () => {
-  const currentUser = AuthService.getCurrentUser();
+  const initialValues: IUser = {
+    username: "",
+    email: "",
+    name: "",
+    surname: "",
+    age: 0,
+    bornAt: new Date(),
+    password: "",
+  };
+
+  const [currentUser, setCurrentUser] = useState<IUser>(initialValues);
+
+  useEffect(() => {
+    getCurrentUser().then((user) => {
+      console.log(user);
+      if(user) {
+        setCurrentUser(user);
+      }
+    });
+  }, [])
 
   return (
     <div className="container">
