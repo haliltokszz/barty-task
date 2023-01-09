@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { IsDateString, IsEmail, IsNotEmpty, IsNumberString, IsString, IsStrongPassword } from 'class-validator';
+import { IsDate, IsDateString, IsEmail, IsNotEmpty, IsNumber, IsNumberString, IsString, IsStrongPassword } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -12,7 +12,7 @@ export class CreateUserDto {
   name: string;
   @IsString()
   surname: string;
-  @IsNumberString()
+  @IsNumber()
   age: number;
   @IsDateString()
   bornAt: Date;
@@ -25,7 +25,7 @@ export class CreateUserDto {
   image: string;
   @IsEmail()
   email: string;
-  @IsNumberString()
+  @IsNumber()
   balance: number;
   @IsString()
   phoneNumber: string;
