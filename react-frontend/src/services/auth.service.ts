@@ -1,43 +1,44 @@
 import axios from "axios";
-import { UserType } from "../types/user.type";
-import UserService from "./user.service";
+import IUser from "../types/user.type";
+import { getUser } from "./user.service";
+import jwtDecode from "jwt-decode";
 
-const API_URL = "http://localhost:3000/auth/";
+const API_URL = "http://localhost:3000/";
 
-class AuthService {
-  login(email: string, password: string) {
-    return axios
-      .post(API_URL + "login", { email, password })
-      .then((response) => {
-        if (response.data.accessToken) {
-          localStorage.setItem("token", JSON.stringify(response.data));
-        }
+export const register = (user: IUser) => {
+  return axios.post(API_URL + "users/signup", 
+    user
+  );
+};
 
-        return response.data;
-      });
-  }
+export const login = (email: string, password: string) => {
+  return axios
+    .post(API_URL + "auth/login", {
+      email,
+      password,
+    })
+    .then((response) => {
+      if (response.data) {
+        localStorage.setItem("token", JSON.stringify(response.data));
+      }
 
-  logout() {
-    localStorage.removeItem("token");
-  }
-
-  register(user: UserType) {
-    return axios.post(API_URL + "signup", {
-      user,
+      return response.data;
     });
-  }
+};
 
-  getCurrentUser(): UserType | undefined{
-    const token = localStorage.getItem("token");
-    const decodedToken = JSON.parse(token!);
-    console.log(decodedToken);
-    if(!decodedToken) return undefined;
-    
-    UserService.getUser(decodedToken.id).then((response) => {
-      return response.data as UserType;
-    });
-    return undefined;
-  };
-}
+export const logout = () => {
+  localStorage.removeItem("token");
+};
 
-export default new AuthService();
+export const getCurrentUser = async () => {
+  const token = localStorage.getItem("token");
+  const decodedToken = jwtDecode<IUser>(token!);
+  console.log(decodedToken);
+
+  let user : IUser | undefined = undefined;
+  await getUser(decodedToken.id).then((response) => {
+    console.log(response.data);
+    user = response.data as IUser;
+  });
+  return user;
+};
