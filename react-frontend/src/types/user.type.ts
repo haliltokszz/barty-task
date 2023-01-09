@@ -1,16 +1,15 @@
-export interface UserType {
-    name?: string,
-    surname?: string,
-    age?: number,
-    bornAt?: Date,
-    location?: string,
-    about?: string,
-    image?: string,
-    email?: string,
-    balance?: number,
-    password?: string
-    phoneNumber?: string,
-    username?: string
+export default interface IUser {
+  id?: any | null,
+  username: string,
+  email: string,
+  password: string,
+  name?: string,
+  surname?: string,
+  age?: number,
+  bornAt?: Date,
+  location?: string,
+  about?: string,
+  image?: string,
+  balance?: number,
+  phoneNumber?: string,
 }
-
-export class User implements UserType {}
