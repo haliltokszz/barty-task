@@ -2,14 +2,25 @@ import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import {User, UserType} from "../types/user.type";
-import AuthService from "../services/auth.service";
+import IUser from "../types/user.type";
+import { register } from "../services/auth.service";
 
 const Register: React.FC = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
 
-  const initialValues : UserType = new User();
+  const initialValues: IUser = {
+    username: "",
+    email: "",
+    password: "",
+    name: "",
+    surname: "",
+    age: 0,
+    bornAt: new Date(),
+    balance: 0,
+    about: "",
+    phoneNumber: "",
+  };
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -17,9 +28,7 @@ const Register: React.FC = () => {
         "len",
         "The username must be between 3 and 20 characters.",
         (val: any) =>
-          val &&
-          val.toString().length >= 3 &&
-          val.toString().length <= 20
+          val && val.toString().length >= 3 && val.toString().length <= 20
       )
       .required("This field is required!"),
     email: Yup.string()
@@ -30,15 +39,13 @@ const Register: React.FC = () => {
         "len",
         "The password must be between 6 and 40 characters.",
         (val: any) =>
-          val &&
-          val.toString().length >= 6 &&
-          val.toString().length <= 40
+          val && val.toString().length >= 6 && val.toString().length <= 40
       )
       .required("This field is required!"),
   });
 
-  const handleRegister = (formValue: UserType) => {
-    AuthService.register(formValue).then(
+  const handleRegister = (formValue: IUser) => {
+    register(formValue).then(
       (response) => {
         setMessage(response.data.message);
         setSuccessful(true);
@@ -82,7 +89,6 @@ const Register: React.FC = () => {
                     className="alert alert-danger"
                   />
                 </div>
-
                 <div className="form-group">
                   <label htmlFor="email"> Email </label>
                   <Field name="email" type="email" className="form-control" />
@@ -106,9 +112,73 @@ const Register: React.FC = () => {
                     className="alert alert-danger"
                   />
                 </div>
-
                 <div className="form-group">
-                  <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+                  <label htmlFor="name"> Name </label>
+                  <Field name="name" type="text" className="form-control" />
+                  <ErrorMessage
+                    name="name"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="surname"> Surname </label>
+                  <Field name="surname" type="text" className="form-control" />
+                  <ErrorMessage
+                    name="surname"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="age"> Age </label>
+                  <Field name="age" type="number" className="form-control" />
+                  <ErrorMessage
+                    name="age"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="bornAt"> Birthday </label>
+                  <Field name="bornAt" type="date" className="form-control" />
+                  <ErrorMessage
+                    name="bornAt"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="balance"> Balance </label>
+                  <Field name="balance" type="number" className="form-control" />
+                  <ErrorMessage
+                    name="balance"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="about"> About </label>
+                  <Field name="about" type="text" className="form-control" />
+                  <ErrorMessage
+                    name="about"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="phoneNumber"> Phone Number </label>
+                  <Field name="phoneNumber" type="tel" className="form-control" />
+                  <ErrorMessage
+                    name="phoneNumber"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                </div>
+                <div className="form-group">
+                  <button type="submit" className="btn btn-primary btn-block">
+                    Sign Up
+                  </button>
                 </div>
               </div>
             )}
